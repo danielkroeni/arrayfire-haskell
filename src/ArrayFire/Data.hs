@@ -54,7 +54,7 @@ import ArrayFire.Internal.Defines
 import ArrayFire.Internal.Types
 import ArrayFire.Arith
 
--- | Creates an 'Array' 'Double' from a scalar value
+-- | Creates an 'Array' from a scalar value
 --
 -- @
 -- >>> 'constant' \@'Double' [2,2] 2.0
@@ -195,7 +195,7 @@ constant dims val =
 -- | Creates an 'Array Word64' from a scalar value
 --
 -- @
--- >>> constantULong [2,2] 2.0
+-- >>> range [2,2] 2.0 2.0
 -- @
 --
 range
@@ -218,11 +218,13 @@ range dims (fromIntegral -> k) = do
         n = fromIntegral (length dims)
         typ = afType (Proxy @ a)
 
--- | Creates an 'Array Word64' from a scalar value
+-- | Creates an 'Array' from a scalar value
 --
 -- @
--- >>> constantULong [2,2] 2.0
+-- >>> iota [2,2] [2,2]
 -- @
+--
+-- <http://arrayfire.org/docs/group__data__func__iota.htm>
 --
 iota
   :: forall a . AFType a

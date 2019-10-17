@@ -37,13 +37,31 @@ import ArrayFire.FFI
 import ArrayFire.Internal.Arith
 import ArrayFire.Internal.Types
 
--- | Adds two 'Array' objects
+-- | Adds two 'Array' objects, , defaults batch to `True`
 --
 -- @
--- >>> (scalar \@Int 1 \`add\` scalar \@Int 1) True
+-- >>> (scalar \@Int 1 \`add\` scalar \@Int 1)
 -- @
 --
 add
+  :: AFType a
+  => Array a
+  -- ^ First input
+  -> Array a
+  -- ^ Second input
+  -> Array a
+  -- ^ Result of add
+add x y () =
+  x `op2` y $ \arr arr1 arr2 ->
+    af_add arr arr1 arr2 1
+
+-- | Adds two 'Array' objects, allows user to specify batch operation.
+--
+-- @
+-- >>> (scalar \@Int 1 \`addBatch\` scalar \@Int 1) True
+-- @
+--
+addBatched
   :: AFType a
   => Array a
   -- ^ First input
@@ -53,9 +71,10 @@ add
   -- ^ Use batch
   -> Array a
   -- ^ Result of add
-add x y (fromIntegral . fromEnum -> batch) =
+addBatched x y =
   x `op2` y $ \arr arr1 arr2 ->
-    af_add arr arr1 arr2 batch
+    af_add arr arr1 arr2 1
+
 
 -- | Subtracts two 'Array' objects
 --
