@@ -16,6 +16,10 @@ in
              'cabal v1-configure --enable-tests && \
                 cabal v1-build test && dist/build/test/test'
       }
+      function test () {
+        cabal v1-configure --enable-tests && \
+          cabal v1-build test && dist/build/test/test
+      }
       function doctest-runner () {
          ${pkgs.ag}/bin/ag -l | \
            ${pkgs.entr}/bin/entr sh -c \
